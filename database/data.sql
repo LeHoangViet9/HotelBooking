@@ -1,24 +1,6 @@
 USE HotelBookingDB
 GO
 
-DELETE FROM answers
-DELETE FROM questions
-DELETE FROM bookings
-DELETE FROM rooms
-DELETE FROM hotels
-DELETE FROM users
-DELETE FROM cities
-GO
-
-DBCC CHECKIDENT ('answers', RESEED, 0)
-DBCC CHECKIDENT ('questions', RESEED, 0)
-DBCC CHECKIDENT ('bookings', RESEED, 0)
-DBCC CHECKIDENT ('rooms', RESEED, 0)
-DBCC CHECKIDENT ('hotels', RESEED, 0)
-DBCC CHECKIDENT ('users', RESEED, 0)
-DBCC CHECKIDENT ('cities', RESEED, 0)
-GO;
-
 INSERT INTO cities(name) VALUES
 ('Ha Noi'),
 ('Ho Chi Minh'),
