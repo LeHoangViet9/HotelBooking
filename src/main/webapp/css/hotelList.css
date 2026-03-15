@@ -1,0 +1,83 @@
+/* ===== HOTEL LIST ===== */
+
+.hotel-list-title{
+    width:85%;
+    margin:40px auto 10px;
+    font-size:28px;
+}
+
+.hotel-card{
+    display:flex;
+    width:85%;
+    margin:25px auto;
+    background:white;
+    border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.12);
+    overflow:hidden;
+    transition:0.2s;
+}
+
+.hotel-card:hover{
+    transform:translateY(-4px);
+}
+
+.hotel-img{
+    width:260px;
+    height:180px;
+    object-fit:cover;
+}
+.hotel-list-title{
+    width:85%;
+    margin:40px auto 10px;
+    font-size:28px;
+}
+.hotel-info{
+    padding:20px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.hotel-name{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.hotel-address{
+    color:#777;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.hotel-desc{
+    color:#444;
+    font-size:15px;
+}
+
+.hotel-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+}
+
+.hotel-price{
+    color:#ff5a00;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.book-btn{
+    background:#2563eb;
+    color:white;
+    padding:8px 18px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.book-btn:hover{
+    background:#1e4fc1;
+}

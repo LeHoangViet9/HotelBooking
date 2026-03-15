@@ -1,0 +1,44 @@
+/* ===== HEADER ===== */
+
+.header{
+    background: linear-gradient(to right,#2a5bd7,#2563eb);
+    padding:18px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo a{
+    font-size:22px;
+    font-weight:bold;
+    color:white;
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.nav a{
+    color:white;
+    font-size:16px;
+}
+
+.nav a:hover{
+    text-decoration:underline;
+}
+
+.welcome{
+    color:white;
+}
+
+.logout{
+    background:#ff5a00;
+    padding:6px 12px;
+    border-radius:5px;
+}
+
+.logout:hover{
+    background:#e04e00;
+}

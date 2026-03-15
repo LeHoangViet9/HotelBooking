@@ -1,0 +1,85 @@
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+}
+.container{
+    display:flex;
+    justify-content:center;
+}
+
+.card{
+    border-radius:12px;
+}
+
+.booking-container{
+    width:450px;
+    margin:60px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.booking-title{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.room-info{
+    background:#f7f7f7;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.room-price{
+    color:#ff6b00;
+    font-weight:bold;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:5px;
+}
+
+.form-group input{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+.total-price{
+    font-size:18px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.error-msg{
+    color:red;
+    font-size:14px;
+}
+
+.confirm-btn{
+    width:100%;
+    padding:10px;
+    background:#2e63d6;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.confirm-btn:hover{
+    background:#1e4ab5;
+}
+.rating{
+    color:#ffc107;
+    font-size:20px;
+    letter-spacing:2px;
+}
