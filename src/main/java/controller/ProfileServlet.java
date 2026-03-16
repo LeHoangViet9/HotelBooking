@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.UserDAO;
@@ -19,21 +18,25 @@ import model.User;
  * @author LE HOANG VIET
  */
 public class ProfileServlet extends HttpServlet {
-   
-   
-    private UserDAO userDAO=new UserDAO();
+
+    private UserDAO userDAO = new UserDAO();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
-    } 
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        HttpSession session=request.getSession();
-         User user = (User) session.getAttribute("user");
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
 
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect("login");
+            return;
+        }
         String fullName = request.getParameter("fullName");
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
@@ -48,6 +51,5 @@ public class ProfileServlet extends HttpServlet {
 
         response.sendRedirect("profile");
     }
-
 
 }

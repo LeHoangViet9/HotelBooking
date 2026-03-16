@@ -37,26 +37,43 @@ public class RoomDAO {
         em.getTransaction().commit();
         em.close();
     }
+
     public List<Room> search(String keyword, int page, int pageSize, String sort) {
 
-    EntityManager em = JPAUtil.getEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
 
-    String jpql = "SELECT r FROM Room r WHERE r.roomType LIKE :kw";
+        String jpql = "SELECT r FROM Room r WHERE r.roomType LIKE :kw";
 
-    if ("priceAsc".equals(sort)) {
-        jpql += " ORDER BY r.price ASC";
-    } else if ("priceDesc".equals(sort)) {
-        jpql += " ORDER BY r.price DESC";
+        if ("priceAsc".equals(sort)) {
+            jpql += " ORDER BY r.price ASC";
+        } else if ("priceDesc".equals(sort)) {
+            jpql += " ORDER BY r.price DESC";
+        }
+
+        TypedQuery<Room> query = em.createQuery(jpql, Room.class);
+        query.setParameter("kw", "%" + keyword + "%");
+
+        query.setFirstResult((page - 1) * pageSize);
+        query.setMaxResults(pageSize);
+
+        List<Room> list = query.getResultList();
+        em.close();
+        return list;
     }
 
-    TypedQuery<Room> query = em.createQuery(jpql, Room.class);
-    query.setParameter("kw", "%" + keyword + "%");
+    public List<Room> getRoomsByHotelId(int hotelId) {
 
-    query.setFirstResult((page - 1) * pageSize);
-    query.setMaxResults(pageSize);
+        EntityManager em = JPAUtil.getEntityManager();
 
-    List<Room> list = query.getResultList();
-    em.close();
-    return list;
-}
+        String jpql = "SELECT r FROM Room r WHERE r.hotel.id = :hotelId";
+
+        TypedQuery<Room> query = em.createQuery(jpql, Room.class);
+        query.setParameter("hotelId", hotelId);
+
+        List<Room> list = query.getResultList();
+
+        em.close();
+
+        return list;
+    }
 }

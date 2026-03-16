@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.CityDAO;
 import dal.HotelDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.City;
 import model.Hotel;
 
 /**
@@ -59,26 +61,34 @@ public class AdminHotelServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+        CityDAO citydao = new CityDAO();
+        List<City> cities = citydao.getAllCity();
+        request.setAttribute("cities", cities);
         HotelDAO dao = new HotelDAO();
         if (action == null) {
             action = "list";
         }
-        int id = Integer.parseInt(request.getParameter("id"));
-        switch (action) {
-            case "delete":
 
-                dao.deleteHotel(id);
+        switch (action) {
+
+            case "delete":
+                int idDelete = Integer.parseInt(request.getParameter("id"));
+                dao.deleteHotel(idDelete);
                 response.sendRedirect("adminHotel");
                 break;
+
             case "edit":
-                Hotel hotel = dao.findById(id);
+                int idEdit = Integer.parseInt(request.getParameter("id"));
+                Hotel hotel = dao.findById(idEdit);
+
                 request.setAttribute("hotel", hotel);
-                request.getRequestDispatcher("edit_hotel.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/edit.jsp").forward(request, response);
                 break;
+
             default:
                 List<Hotel> list = dao.getAllHotel();
                 request.setAttribute("hotels", list);
-                request.getRequestDispatcher("admin_hotels.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/admin_hotels.jsp").forward(request, response);
         }
     }
 
@@ -96,14 +106,23 @@ public class AdminHotelServlet extends HttpServlet {
         String id = request.getParameter("id");
         String name = request.getParameter("name");
         String address = request.getParameter("address");
+        String cityId = request.getParameter("city_id");
+        String rating = request.getParameter("rating");
+        String image = request.getParameter("image");
 
         HotelDAO dao = new HotelDAO();
+        CityDAO citydao = new CityDAO();
+        City city = citydao.findById(Integer.parseInt(cityId));
 
         if (id == null) {
 
             Hotel h = new Hotel();
             h.setName(name);
             h.setAddress(address);
+            h.setCity(city);
+            h.setRating(Double.parseDouble(rating));
+            h.setImage(image);
+
             dao.addHotel(h);
 
         } else {
@@ -111,6 +130,9 @@ public class AdminHotelServlet extends HttpServlet {
 
             h.setName(name);
             h.setAddress(address);
+            h.setCity(city);
+            h.setRating(Double.parseDouble(rating));
+            h.setImage(image);
 
             dao.updateHotel(h);
         }

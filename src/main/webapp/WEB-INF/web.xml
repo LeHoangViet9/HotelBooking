@@ -106,7 +106,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RoomServlet</servlet-name>
-        <url-pattern>/room</url-pattern>
+        <url-pattern>/admin/rooms</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BookingServlet</servlet-name>

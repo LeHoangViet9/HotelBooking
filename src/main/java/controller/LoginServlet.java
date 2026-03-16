@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         User user = dao.login(email, password);
         if (user == null) {
             request.setAttribute("error", "Invalid email or password");
-            request.getRequestDispatcher("views/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);

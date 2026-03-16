@@ -17,17 +17,19 @@ public class Hotel {
     @Column(nullable = false)
     private Double rating = 0.0;
 
+    @Column(name = "image")
+    private String image;
+
     // Many hotel thuộc 1 city
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Room> rooms;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private List<Question> questions;
-
 
     public int getId() {
         return id;
@@ -92,5 +94,15 @@ public class Hotel {
     public void setRating(Double rating) {
         this.rating = rating;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
+    
 
 }

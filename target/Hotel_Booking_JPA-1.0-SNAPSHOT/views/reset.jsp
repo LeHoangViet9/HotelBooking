@@ -19,7 +19,7 @@
 
                 <p>Enter your new password</p>
 
-                <form action="reset" method="post">
+                <form action="${pageContext.request.contextPath}/reset" method="post">
 
                     <input type="password"
                            name="password"
@@ -38,7 +38,7 @@
                 <p class="error">${error}</p>
 
                 <div class="auth-links">
-                    <a href="login">Back to Login</a>
+                    <a href="${pageContext.request.contextPath}/login">Back to Login</a>
                 </div>
 
             </div>

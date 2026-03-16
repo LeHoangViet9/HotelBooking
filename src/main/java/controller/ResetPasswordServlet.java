@@ -31,7 +31,7 @@ public class ResetPasswordServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("resetUser") == null) {
-            response.sendRedirect("login");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
@@ -52,7 +52,7 @@ public class ResetPasswordServlet extends HttpServlet {
 
         session.removeAttribute("resetUser");
 
-        response.sendRedirect("login");
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 
 }

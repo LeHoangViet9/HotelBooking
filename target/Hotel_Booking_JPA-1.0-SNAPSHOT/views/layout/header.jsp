@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_dashboard.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/contact.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_hotel.css">
 </head>
 
 <body>
@@ -37,8 +38,8 @@
             <c:choose>
 
                 <c:when test="${sessionScope.user == null}">
-                    <a href="${pageContext.request.contextPath}/views/login.jsp">Login</a>
-                    <a href="${pageContext.request.contextPath}/views/register.jsp">Register</a>
+                    <a href="${pageContext.request.contextPath}/login">Login</a>
+                    <a href="${pageContext.request.contextPath}/register">Register</a>
                 </c:when>
 
                 <c:otherwise>
@@ -48,19 +49,23 @@
                     </span>
 
                     <c:if test="${sessionScope.user.role=='USER'}">
+                        <a href="${pageContext.request.contextPath}/profile">Profile</a>
                         <a href="${pageContext.request.contextPath}/contact">Contact</a>
                         <a href="${pageContext.request.contextPath}/mybooking">My Bookings</a>
                     </c:if>
-                        
+
                     <c:if test="${sessionScope.user.role == 'ADMIN'}">
                         <a href="${pageContext.request.contextPath}/admin/dashboard">
-                            Admin Dashboard
+                            Dashboard
+                        </a>
+                        <a href="${pageContext.request.contextPath}/adminHotel">
+                            Manage Hotels
+                        </a>
+                        <a href="${pageContext.request.contextPath}/admin/booking">
+                            Manage Bookings
                         </a>
                     </c:if>
 
-                    <c:if test="${sessionScope.user.role=='ADMIN'}">
-                        <a href="${pageContext.request.contextPath}/admin/booking">Manage Bookings</a>
-                    </c:if>
 
                     <a class="logout" href="${pageContext.request.contextPath}/logout">Logout</a>
 

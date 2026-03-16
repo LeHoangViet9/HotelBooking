@@ -6,7 +6,18 @@ import java.util.List;
 import model.City;
 import utils.JPAUtil;
 
-public class CityDAO  {
+public class CityDAO {
+
+    public List<City> getAllCity() {
+
+        EntityManager em = JPAUtil.getEntityManager();
+
+        String jpql = "SELECT c FROM City c";
+
+        TypedQuery<City> query = em.createQuery(jpql, City.class);
+
+        return query.getResultList();
+    }
 
     public List<City> searchCity(String keyword) {
 
@@ -18,5 +29,12 @@ public class CityDAO  {
         query.setParameter("keyword", "%" + keyword + "%");
 
         return query.getResultList();
+    }
+
+    public City findById(int id) {
+
+        EntityManager em = JPAUtil.getEntityManager();
+
+        return em.find(City.class, id);
     }
 }

@@ -23,7 +23,7 @@
             <div class="hotel-card">
 
                 <!-- HOTEL IMAGE -->
-                <img src="${pageContext.request.contextPath}/images/hotel.jpg"
+                <img src="${pageContext.request.contextPath}/img/${h.image}"
                      class="hotel-img">
 
                 <!-- HOTEL INFO -->

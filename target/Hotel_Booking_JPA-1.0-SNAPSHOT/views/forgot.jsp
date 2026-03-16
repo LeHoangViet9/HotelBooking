@@ -26,7 +26,7 @@
         </form>
 
         <p>
-            <a href="login.jsp">Back to Login</a>
+            <a href="${pageContext.request.contextPath}/login">Back to Login</a>
         </p>
 
     </div>

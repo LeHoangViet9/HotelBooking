@@ -38,20 +38,20 @@ INSERT INTO users(email,password,phone,role,fullName) VALUES
 
 select * from users
 
-INSERT INTO hotels(name,address,city_id,description,rating) VALUES
-('Sunrise Hotel','Hoan Kiem',1,'Hotel near Hoan Kiem lake',4.5),
-('Golden Lake Hotel','Ba Dinh',1,'Luxury hotel with lake view',4.7),
+INSERT INTO hotels(name,address,city_id,description,rating,image) VALUES
+('Sunrise Hotel','Hoan Kiem',1,'Hotel near Hoan Kiem lake',4.5,'Sunrise.webp'),
+('Golden Lake Hotel','Ba Dinh',1,'Luxury hotel with lake view',4.7,'Golden_Lake.webp'),
 
-('Saigon Center Hotel','District 1',2,'Hotel in city center',4.3),
-('Riverside Hotel','District 1',2,'Beautiful river view',4.4),
+('Saigon Center Hotel','District 1',2,'Hotel in city center',4.3,'Sai_Gon_Center.jpg'),
+('Riverside Hotel','District 1',2,'Beautiful river view',4.4,'Riverside.jpg'),
 
-('Dragon Bridge Hotel','Hai Chau',3,'Near Dragon Bridge',4.2),
+('Dragon Bridge Hotel','Hai Chau',3,'Near Dragon Bridge',4.2,'Dragon_Bridge.png'),
 
-('Beach Paradise','Tran Phu',4,'Beach front hotel',4.6),
+('Beach Paradise','Tran Phu',4,'Beach front hotel',4.6,'Beach_Paradise_.webp'),
 
-('Pine Hill Hotel','Da Lat Center',5,'Cool mountain view',4.5),
+('Pine Hill Hotel','Da Lat Center',5,'Cool mountain view',4.5,'Pine_Hill.webp'),
 
-('Pearl Island Resort','Phu Quoc Beach',7,'Luxury island resort',4.8);
+('Pearl Island Resort','Phu Quoc Beach',7,'Luxury island resort',4.8,'Pearl_Island.webp');
 
 
 INSERT INTO rooms(hotel_id,room_type,price,quantity,status) VALUES
