@@ -88,6 +88,14 @@
         <servlet-name>SuggestCityServlet</servlet-name>
         <servlet-class>controller.SuggestCityServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BlogServlet</servlet-name>
+        <servlet-class>controller.BlogServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReviewServlet</servlet-name>
+        <servlet-class>controller.ReviewServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -175,6 +183,14 @@
     <servlet-mapping>
         <servlet-name>SuggestCityServlet</servlet-name>
         <url-pattern>/suggestCity</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogServlet</servlet-name>
+        <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReviewServlet</servlet-name>
+        <url-pattern>/review</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,37 +1,42 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<meta charset="UTF-8">
 <!DOCTYPE html>
-<html>
+<html lang="vi">
+<jsp:include page="/views/layout/header.jsp" />
 
-<head>
-    <title>Forgot Password</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
-</head>
+<div class="hb-page">
+    <div class="hb-container">
+        <div class="auth-page">
+            <div class="auth-card">
+                <div class="auth-card-header">
+                    <h1>Quên mật khẩu</h1>
+                    <p>Nhập email để nhận liên kết đặt lại mật khẩu.</p>
+                </div>
+                <div class="auth-card-body">
+                    <form action="${pageContext.request.contextPath}/forgot" method="post" novalidate>
+                        <div class="hb-field">
+                            <label class="hb-label">Email</label>
+                            <input class="hb-input" type="email" name="email" placeholder="vd: email@gmail.com" required>
+                        </div>
 
-<body>
+                        <div class="auth-actions">
+                            <button class="hb-btn hb-btn-primary hb-btn-block" type="submit">
+                                Gửi liên kết khôi phục
+                            </button>
+                        </div>
 
-<div class="auth-container">
-
-    <div class="auth-box">
-
-        <h2>Forgot Password</h2>
-
-        <p>Enter your email to reset your password</p>
-
-        <form action="${pageContext.request.contextPath}/forgot" method="post">
-
-            <input type="email" name="email" placeholder="Enter your email" required>
-
-            <button type="submit">Send Reset Link</button>
-
-        </form>
-
-        <p>
-            <a href="${pageContext.request.contextPath}/login">Back to Login</a>
-        </p>
-
+                        <div class="auth-links">
+                            <div class="auth-inline">
+                                <span>Nhớ mật khẩu rồi?</span>
+                                <a href="${pageContext.request.contextPath}/login">Quay lại đăng nhập</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
 </div>
 
-</body>
+<jsp:include page="/views/layout/footer.jsp" />
 </html>

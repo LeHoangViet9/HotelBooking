@@ -8,7 +8,7 @@ import utils.JPAUtil;
 
 public class HotelDAO {
 
-    public List<Hotel> search(String city, Double min, Double max,
+    public List<Hotel> search(String city, String keyword, Double min, Double max,
             String sort, int page, int pageSize
     ) {
 
@@ -20,20 +20,34 @@ public class HotelDAO {
             jpql += " AND h.city.name LIKE :city";
         }
 
+        if (keyword != null && !keyword.isEmpty()) {
+            jpql += " AND (LOWER(h.name) LIKE LOWER(:kw) OR LOWER(h.address) LIKE LOWER(:kw))";
+        }
+
         if (min != null && max != null) {
             jpql += " AND r.price BETWEEN :min AND :max";
         }
 
-        if ("priceAsc".equals(sort)) {
+        if ("name".equals(sort)) {
+            jpql += " ORDER BY h.name ASC";
+        } else if ("rating".equals(sort)) {
+            jpql += " ORDER BY h.rating DESC";
+        } else if ("priceAsc".equals(sort)) {
             jpql += " ORDER BY r.price ASC";
         } else if ("priceDesc".equals(sort)) {
             jpql += " ORDER BY r.price DESC";
+        } else {
+            jpql += " ORDER BY h.id DESC";
         }
 
         TypedQuery<Hotel> query = em.createQuery(jpql, Hotel.class);
 
         if (city != null && !city.isEmpty()) {
             query.setParameter("city", "%" + city + "%");
+        }
+
+        if (keyword != null && !keyword.isEmpty()) {
+            query.setParameter("kw", "%" + keyword.trim() + "%");
         }
 
         if (min != null && max != null) {
@@ -68,6 +82,9 @@ public class HotelDAO {
             jpql += " AND h.city.name LIKE :city";
         }
 
+        // Keep countSearch in sync with search() filters
+        // NOTE: keyword filter will be applied in the overload below.
+
         if (min != null && max != null) {
             jpql += " AND r.price BETWEEN :min AND :max";
         }
@@ -85,6 +102,37 @@ public class HotelDAO {
 
         int count = query.getSingleResult().intValue();
 
+        em.close();
+        return count;
+    }
+
+    public int countSearch(String city, String keyword, Double min, Double max) {
+        EntityManager em = JPAUtil.getEntityManager();
+        String jpql = "SELECT COUNT(DISTINCT h) FROM Hotel h JOIN h.rooms r WHERE 1=1";
+
+        if (city != null && !city.isEmpty()) {
+            jpql += " AND h.city.name LIKE :city";
+        }
+        if (keyword != null && !keyword.isEmpty()) {
+            jpql += " AND (LOWER(h.name) LIKE LOWER(:kw) OR LOWER(h.address) LIKE LOWER(:kw))";
+        }
+        if (min != null && max != null) {
+            jpql += " AND r.price BETWEEN :min AND :max";
+        }
+
+        TypedQuery<Long> query = em.createQuery(jpql, Long.class);
+        if (city != null && !city.isEmpty()) {
+            query.setParameter("city", "%" + city + "%");
+        }
+        if (keyword != null && !keyword.isEmpty()) {
+            query.setParameter("kw", "%" + keyword.trim() + "%");
+        }
+        if (min != null && max != null) {
+            query.setParameter("min", min);
+            query.setParameter("max", max);
+        }
+
+        int count = query.getSingleResult().intValue();
         em.close();
         return count;
     }

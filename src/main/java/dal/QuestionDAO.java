@@ -27,16 +27,16 @@ public class QuestionDAO {
     }
 
     public List<Question> getAllQuestions() {
-
         EntityManager em = JPAUtil.getEntityManager();
-
         List<Question> list = em.createQuery(
-                "SELECT q FROM Question q LEFT JOIN FETCH q.answers"
-                + "WHERE q.hotel.id=:hid", Question.class
-        ).setParameter("hid", em).getResultList();
-
+                "SELECT DISTINCT q FROM Question q "
+                + "LEFT JOIN FETCH q.user "
+                + "LEFT JOIN FETCH q.answers a "
+                + "LEFT JOIN FETCH a.user "
+                + "ORDER BY q.createdAt DESC",
+                Question.class)
+                .getResultList();
         em.close();
-
         return list;
     }
 

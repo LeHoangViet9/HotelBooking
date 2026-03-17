@@ -1,76 +1,84 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<meta charset="UTF-8">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/views/layout/header.jsp" />
 
+<div class="hb-page">
+    <div class="hb-container">
+        <div class="hb-card">
+            <div class="hb-card-header">
+                <h1 class="hb-title">Đặt phòng của tôi</h1>
+                <p class="hb-subtitle">Theo dõi tình trạng đặt phòng và hủy nếu cần.</p>
+            </div>
+            <div class="hb-card-body">
+                <c:if test="${empty bookings}">
+                    <div class="hb-alert">Bạn chưa có đặt phòng nào.</div>
+                </c:if>
 
-<div class="container mt-4">
-    <h2 class="mb-4">My Bookings</h2>
-
-    <c:if test="${empty bookings}">
-        <div class="alert alert-info">
-            You have no bookings yet.
+                <c:if test="${not empty bookings}">
+                    <div class="hb-table-wrap">
+                        <table class="hb-table">
+                            <thead>
+                                <tr>
+                                    <th>Khách sạn</th>
+                                    <th>Phòng</th>
+                                    <th>Nhận phòng</th>
+                                    <th>Trả phòng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="b" items="${bookings}">
+                                    <tr>
+                                        <td>${b.room.hotel.name}</td>
+                                        <td>${b.room.roomType}</td>
+                                        <td>${b.checkIn}</td>
+                                        <td>${b.checkOut}</td>
+                                        <td><span class="price-strong">${b.totalPrice}</span></td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${b.status == 'PENDING'}">
+                                                    <span class="hb-badge hb-badge-pending">Đang xử lý</span>
+                                                </c:when>
+                                                <c:when test="${b.status == 'CONFIRMED'}">
+                                                    <span class="hb-badge hb-badge-confirmed">Đã xác nhận</span>
+                                                </c:when>
+                                                <c:when test="${b.status == 'CANCELLED'}">
+                                                    <span class="hb-badge hb-badge-cancelled">Đã hủy</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="hb-badge">${b.status}</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:if test="${b.status == 'PENDING' || b.status == 'CONFIRMED'}">
+                                                <form action="${pageContext.request.contextPath}/cancel"
+                                                      method="post"
+                                                      onsubmit="return confirm('Bạn chắc chắn muốn hủy đặt phòng này?');"
+                                                      style="margin:0;">
+                                                    <input type="hidden" name="id" value="${b.id}" />
+                                                    <button type="submit" class="hb-btn hb-btn-outline" style="padding:8px 12px;">
+                                                        Hủy
+                                                    </button>
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${b.status == 'CANCELLED'}">
+                                                <span class="hb-help">Không có</span>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:if>
+            </div>
         </div>
-    </c:if>
-
-    <c:if test="${not empty bookings}">
-        <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>Hotel</th>
-                    <th>Room</th>
-                    <th>Check In</th>
-                    <th>Check Out</th>
-                    <th>Total Price</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="b" items="${bookings}">
-                    <tr>
-                        <td>${b.room.hotel.name}</td>
-                        <td>${b.room.roomType}</td>
-                        <td>${b.checkIn}</td>
-                        <td>${b.checkOut}</td>
-                        <td>${b.totalPrice}</td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${b.status == 'PENDING'}">
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                </c:when>
-                                <c:when test="${b.status == 'CONFIRMED'}">
-                                    <span class="badge bg-success">Confirmed</span>
-                                </c:when>
-                                <c:when test="${b.status == 'CANCELLED'}">
-                                    <span class="badge bg-danger">Cancelled</span>
-                                </c:when>
-                                <c:otherwise>
-                                    ${b.status}
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td>
-                            <c:if test="${b.status == 'PENDING' || b.status == 'CONFIRMED'}">
-                                <form action="${pageContext.request.contextPath}/cancel" 
-                                      method="post"
-                                      onsubmit="return confirm('Are you sure to cancel this booking?');">
-                                    <input type="hidden" name="id" value="${b.id}" />
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        Cancel
-                                    </button>
-                                </form>
-                            </c:if>
-
-                            <c:if test="${b.status == 'CANCELLED'}">
-                                <span class="text-muted">No action</span>
-                            </c:if>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </c:if>
+    </div>
 </div>
 
 <jsp:include page="/views/layout/footer.jsp" />

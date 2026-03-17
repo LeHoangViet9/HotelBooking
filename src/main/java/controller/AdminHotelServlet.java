@@ -103,6 +103,7 @@ public class AdminHotelServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
         String name = request.getParameter("name");
         String address = request.getParameter("address");
@@ -112,15 +113,29 @@ public class AdminHotelServlet extends HttpServlet {
 
         HotelDAO dao = new HotelDAO();
         CityDAO citydao = new CityDAO();
-        City city = citydao.findById(Integer.parseInt(cityId));
+        
+        int parsedCityId = 0;
+        if (cityId != null && !cityId.trim().isEmpty()) {
+            parsedCityId = Integer.parseInt(cityId);
+        }
+        City city = citydao.findById(parsedCityId);
 
-        if (id == null) {
+        double parsedRating = 0.0;
+        if (rating != null && !rating.trim().isEmpty()) {
+            try {
+                parsedRating = Double.parseDouble(rating);
+            } catch (NumberFormatException e) {
+                parsedRating = 0.0;
+            }
+        }
+
+        if (id == null || id.trim().isEmpty()) {
 
             Hotel h = new Hotel();
             h.setName(name);
             h.setAddress(address);
             h.setCity(city);
-            h.setRating(Double.parseDouble(rating));
+            h.setRating(parsedRating);
             h.setImage(image);
 
             dao.addHotel(h);
@@ -131,7 +146,7 @@ public class AdminHotelServlet extends HttpServlet {
             h.setName(name);
             h.setAddress(address);
             h.setCity(city);
-            h.setRating(Double.parseDouble(rating));
+            h.setRating(parsedRating);
             h.setImage(image);
 
             dao.updateHotel(h);

@@ -24,11 +24,10 @@ CREATE TABLE hotels (
     address VARCHAR(255),
     city_id INT,
     description NVARCHAR(MAX),
-    rating FLOAT,
-
+    rating FLOAT DEFAULT 0,
+    image VARCHAR(255),
     FOREIGN KEY (city_id) REFERENCES cities(id)
 );
-
 
 CREATE TABLE rooms (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -37,7 +36,7 @@ CREATE TABLE rooms (
     price FLOAT,
     quantity INT,
     status VARCHAR(50),
-
+    image VARCHAR(255),
     FOREIGN KEY (hotel_id) REFERENCES hotels(id)
 );
 
@@ -49,7 +48,6 @@ CREATE TABLE bookings (
     check_out DATE,
     total_price DECIMAL(12,2),
     status VARCHAR(255),
-
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
@@ -60,7 +58,6 @@ CREATE TABLE questions (
     hotel_id INT,
     content NVARCHAR(MAX),
     created_at DATETIME,
-
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (hotel_id) REFERENCES hotels(id)
 );
@@ -71,7 +68,17 @@ CREATE TABLE answers (
     user_id INT,
     content NVARCHAR(MAX),
     created_at DATETIME,
-
     FOREIGN KEY (question_id) REFERENCES questions(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
-)
+);
+
+CREATE TABLE reviews (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    user_id INT NOT NULL,
+    hotel_id INT NOT NULL,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    comment NVARCHAR(MAX),
+    created_at DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (hotel_id) REFERENCES hotels(id)
+);

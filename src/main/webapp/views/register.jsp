@@ -1,36 +1,65 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<meta charset="UTF-8">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Register</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
-    </head>
-    <body>
+<html lang="vi">
+<jsp:include page="/views/layout/header.jsp" />
 
-        <div class="auth-container">
-            <div class="auth-box">
-                <h2>Register</h2>
+<div class="hb-page">
+    <div class="hb-container">
+        <div class="auth-page">
+            <div class="auth-card">
+                <div class="auth-card-header">
+                    <h1>Tạo tài khoản</h1>
+                    <p>Đăng ký để đặt phòng nhanh hơn và theo dõi lịch sử đặt phòng.</p>
+                </div>
+                <div class="auth-card-body">
+                    <form action="${pageContext.request.contextPath}/register" method="post" novalidate>
+                        <div class="hb-field">
+                            <label class="hb-label">Họ và tên</label>
+                            <input class="hb-input" type="text" name="name" placeholder="vd: Lê Hoàng Việt" required>
+                        </div>
 
-                <form action="${pageContext.request.contextPath}/register" method="post">
+                        <div class="hb-field">
+                            <label class="hb-label">Email</label>
+                            <input class="hb-input" type="email" name="email" placeholder="vd: email@gmail.com" required>
+                        </div>
 
-                    <input type="text" name="name" placeholder="Full Name" required>
+                        <div class="hb-field">
+                            <label class="hb-label">Số điện thoại</label>
+                            <input class="hb-input" type="text" name="phone" placeholder="vd: 09xx xxx xxx" required>
+                        </div>
 
-                    <input type="text" name="email" placeholder="Email" required>
+                        <div class="hb-field">
+                            <label class="hb-label">Mật khẩu</label>
+                            <input class="hb-input" type="password" name="pass" placeholder="Tối thiểu 6 ký tự" required>
+                        </div>
 
-                    <input type="text" name="phone" placeholder="Phone" required>
+                        <div class="hb-field">
+                            <label class="hb-label">Nhập lại mật khẩu</label>
+                            <input class="hb-input" type="password" name="confirm" placeholder="Nhập lại mật khẩu" required>
+                        </div>
 
-                    <input type="password" name="pass" placeholder="Password" required>
+                        <div class="auth-actions">
+                            <button class="hb-btn hb-btn-primary hb-btn-block" type="submit">Đăng ký</button>
+                        </div>
 
-                    <input type="password" name="confirm" placeholder="Confirm Password" required>
+                        <c:if test="${not empty error}">
+                            <div class="hb-error">${error}</div>
+                        </c:if>
 
-                    <button type="submit">REGISTER</button>
-
-                    <p class="error">${error}</p>
-
-                </form>
+                        <div class="auth-links">
+                            <div class="auth-inline">
+                                <span>Đã có tài khoản?</span>
+                                <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
+</div>
 
-    </body>
+<jsp:include page="/views/layout/footer.jsp" />
 </html>

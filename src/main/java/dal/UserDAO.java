@@ -9,13 +9,16 @@ public class UserDAO {
 
     public User login(String email, String password) {
         try (EntityManager em = JPAUtil.getEntityManager()) {
-            return em.createQuery(
+            java.util.List<User> list = em.createQuery(
                     "SELECT u FROM User u WHERE u.email = :e AND u.password = :p",
                     User.class)
                     .setParameter("e", email)
                     .setParameter("p", password)
-                    .getSingleResult();
-        } catch (NoResultException e) {
+                    .setMaxResults(1)
+                    .getResultList();
+            return list.isEmpty() ? null : list.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -30,12 +33,15 @@ public class UserDAO {
 
     public User findByEmail(String email) {
         try (EntityManager em = JPAUtil.getEntityManager()) {
-            return em.createQuery(
+            java.util.List<User> list = em.createQuery(
                     "SELECT u FROM User u WHERE u.email = :e",
                     User.class)
                     .setParameter("e", email)
-                    .getSingleResult();
-        } catch (NoResultException e) {
+                    .setMaxResults(1)
+                    .getResultList();
+            return list.isEmpty() ? null : list.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

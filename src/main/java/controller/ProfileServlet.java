@@ -41,6 +41,12 @@ public class ProfileServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
 
+        if (fullName == null || phone == null || password == null || fullName.trim().isEmpty() || password.trim().isEmpty()) {
+            request.setAttribute("error", "Tên và mật khẩu không được để trống!");
+            request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
+            return;
+        }
+
         user.setFullName(fullName);
         user.setPhone(phone);
         user.setPassword(password);

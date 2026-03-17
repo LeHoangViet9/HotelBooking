@@ -59,8 +59,21 @@ public class BookingServlet extends HttpServlet {
         }
 
         int roomId = Integer.parseInt(request.getParameter("roomId"));
-        LocalDate checkIn = LocalDate.parse(request.getParameter("checkIn"));
-        LocalDate checkOut = LocalDate.parse(request.getParameter("checkOut"));
+        String checkInStr = request.getParameter("checkIn");
+        String checkOutStr = request.getParameter("checkOut");
+
+        if (checkInStr == null || checkOutStr == null || checkInStr.isEmpty() || checkOutStr.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/home");
+            return;
+        }
+
+        LocalDate checkIn = LocalDate.parse(checkInStr);
+        LocalDate checkOut = LocalDate.parse(checkOutStr);
+
+        if (checkIn.isBefore(LocalDate.now())) {
+            response.sendRedirect(request.getContextPath() + "/home");
+            return;
+        }
 
         Room room = roomDAO.findById(roomId);
 

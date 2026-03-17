@@ -45,10 +45,17 @@ public class SearchServlet extends HttpServlet {
 
         // ===== LẤY PARAMETER SEARCH =====
         String city = request.getParameter("city");
+        String keyword = request.getParameter("keyword");
         String sort = request.getParameter("sort");
-        LocalDate.parse(request.getParameter("checkin"));
-        LocalDate.parse(request.getParameter("checkout"));
-        Double price = null;
+        // Optional dates - validate only if present
+        String checkinRaw = request.getParameter("checkin");
+        String checkoutRaw = request.getParameter("checkout");
+        if (checkinRaw != null && !checkinRaw.isBlank()) {
+            LocalDate.parse(checkinRaw);
+        }
+        if (checkoutRaw != null && !checkoutRaw.isBlank()) {
+            LocalDate.parse(checkoutRaw);
+        }
         String priceRange = request.getParameter("priceRange");
 
         Double min = null;
@@ -69,15 +76,16 @@ public class SearchServlet extends HttpServlet {
 
         HotelDAO dao = new HotelDAO();
 
-        List<Hotel> hotels = dao.search(city, min, max, sort, page, pageSize);
+        List<Hotel> hotels = dao.search(city, keyword, min, max, sort, page, pageSize);
 
-        int totalHotels = dao.countSearch(city, min, max);
+        int totalHotels = dao.countSearch(city, keyword, min, max);
 
         int totalPages = (int) Math.ceil((double) totalHotels / pageSize);
         request.setAttribute("hotels", hotels);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("sort", sort);
+        request.setAttribute("keyword", keyword);
 
         request.getRequestDispatcher("/views/hotelList.jsp")
                 .forward(request, response);

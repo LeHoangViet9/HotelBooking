@@ -9,6 +9,7 @@ controller\MyBookingServlet.class
 controller\SuggestCityServlet.class
 model\RoomStatus.class
 controller\ResetPasswordServlet.class
+model\Review.class
 dal\QuestionDAO.class
 utils\JPAUtil.class
 controller\BookingServlet.class
@@ -17,7 +18,9 @@ model\City.class
 model\UserRole.class
 controller\ProfileServlet.class
 controller\UpdateBookingServlet.class
+controller\BlogServlet.class
 model\Answer.class
+controller\ReviewServlet.class
 model\User.class
 controller\CancelBookingServlet.class
 controller\HotelDetailServlet.class
@@ -26,6 +29,7 @@ controller\RoomServlet.class
 controller\AdminHotelServlet.class
 controller\SearchServlet.class
 dal\CityDAO.class
+dal\ReviewDAO.class
 model\Booking.class
 model\Room.class
 controller\AdminDashboardServlet.class

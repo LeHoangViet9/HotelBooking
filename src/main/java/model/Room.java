@@ -10,14 +10,19 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "room_type")
     private String roomType;
+
     private double price;
     private int quantity;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private RoomStatus status;
+
+    @Column(name = "image")
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")
@@ -27,8 +32,6 @@ public class Room {
     private List<Booking> bookings;
 
     public Room() {}
-
-    // Getter Setter
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -44,6 +47,9 @@ public class Room {
 
     public RoomStatus getStatus() { return status; }
     public void setStatus(RoomStatus status) { this.status = status; }
+
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
 
     public Hotel getHotel() { return hotel; }
     public void setHotel(Hotel hotel) { this.hotel = hotel; }
