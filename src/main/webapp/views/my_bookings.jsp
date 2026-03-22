@@ -1,6 +1,8 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <meta charset="UTF-8">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<fmt:formatNumber value="${b.totalPrice}" type="number" groupingUsed="true"/> đ
 
 <jsp:include page="/views/layout/header.jsp" />
 
@@ -37,7 +39,7 @@
                                         <td>${b.room.roomType}</td>
                                         <td>${b.checkIn}</td>
                                         <td>${b.checkOut}</td>
-                                        <td><span class="price-strong">${b.totalPrice}</span></td>
+                                        <td><span class="price-strong"><fmt:formatNumber value="${b.totalPrice}" type="number" groupingUsed="true"/></span></td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${b.status == 'PENDING'}">
@@ -48,6 +50,9 @@
                                                 </c:when>
                                                 <c:when test="${b.status == 'CANCELLED'}">
                                                     <span class="hb-badge hb-badge-cancelled">Đã hủy</span>
+                                                </c:when>
+                                                <c:when test="${b.status == 'COMPLETED'}">
+                                                    <span class="hb-badge" style="background:#ccfbf1;color:#115e59;">Hoàn tất</span>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <span class="hb-badge">${b.status}</span>
@@ -68,6 +73,13 @@
                                             </c:if>
                                             <c:if test="${b.status == 'CANCELLED'}">
                                                 <span class="hb-help">Không có</span>
+                                            </c:if>
+                                            <c:if test="${b.status == 'COMPLETED'}">
+                                                <a href="${pageContext.request.contextPath}/hotel?id=${b.room.hotel.id}#reviews" 
+                                                   class="hb-btn hb-btn-primary" 
+                                                   style="padding:8px 12px; text-decoration: none; font-size: 13px;">
+                                                    Đánh giá
+                                                </a>
                                             </c:if>
                                         </td>
                                     </tr>

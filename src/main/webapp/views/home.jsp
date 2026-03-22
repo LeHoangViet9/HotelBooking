@@ -72,7 +72,7 @@
             </div>
             <div class="destinations-grid">
                 <a href="${pageContext.request.contextPath}/search?city=Ha+Noi" class="dest-card dest-large">
-                    <img src="${pageContext.request.contextPath}/img/hanoi.jpg"
+                    <img src="${pageContext.request.contextPath}/img/hanoii.jpg"
                          onerror="this.style.display='none'; this.parentElement.classList.add('dest-no-img');"
                          alt="Hà Nội">
                     <div class="dest-overlay">
@@ -83,7 +83,7 @@
                     </div>
                 </a>
                 <a href="${pageContext.request.contextPath}/search?city=Ho+Chi+Minh" class="dest-card">
-                    <img src="${pageContext.request.contextPath}/img/hcm.jpg"
+                    <img src="${pageContext.request.contextPath}/img/hochiminh.jpg"
                          onerror="this.style.display='none';" alt="TP. Hồ Chí Minh">
                     <div class="dest-overlay">
                         <div class="dest-info">
@@ -103,7 +103,7 @@
                     </div>
                 </a>
                 <a href="${pageContext.request.contextPath}/search?city=Nha+Trang" class="dest-card">
-                    <img src="${pageContext.request.contextPath}/img/nhatrang.jpg"
+                    <img src="${pageContext.request.contextPath}/img/nha trang.jpg"
                          onerror="this.style.display='none';" alt="Nha Trang">
                     <div class="dest-overlay">
                         <div class="dest-info">
@@ -299,7 +299,7 @@
         <section class="app-banner-section">
             <div class="app-banner-content">
                 <div class="app-banner-text">
-                    <h2>Đặt phòng dễ dàng hơn với ứng dụng VietNgủ</h2>
+                    <h2>Đặt phòng dễ dàng hơn với ứng dụng HotelBooking</h2>
                     <p>Quản lý đặt phòng, nhận thông báo và ưu đãi riêng – mọi lúc mọi nơi.</p>
                     <div class="app-buttons">
                         <a href="#" class="app-btn">

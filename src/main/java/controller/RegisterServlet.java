@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controller;
 
 import dal.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,27 +9,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import model.UserRole;
 
-/**
- *
- * @author LE HOANG VIET
- */
 public class RegisterServlet extends HttpServlet {
-   
-   
+
     private UserDAO userDAO;
+
     @Override
-    public void init(){
-        userDAO=new UserDAO();
+    public void init() {
+        userDAO = new UserDAO();
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         request.getRequestDispatcher("views/register.jsp").forward(request, response);
-    } 
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
 
         String fullName = request.getParameter("name");
@@ -44,46 +36,71 @@ public class RegisterServlet extends HttpServlet {
         String pass = request.getParameter("pass");
         String confirm = request.getParameter("confirm");
 
+        String error = "";
+
+        // 1️⃣ check empty
         if (fullName == null || email == null || phone == null
                 || pass == null || confirm == null
-                || fullName.isEmpty() || email.isEmpty()
-                || phone.isEmpty() || pass.isEmpty()) {
+                || fullName.trim().isEmpty()
+                || email.trim().isEmpty()
+                || phone.trim().isEmpty()
+                || pass.trim().isEmpty()
+                || confirm.trim().isEmpty()) {
 
-            request.setAttribute("error", "All fields are required!");
-            request.getRequestDispatcher("views/register.jsp")
-                   .forward(request, response);
+            error += "All fields are required!<br>";
+        }
+
+        // 2️⃣ regex
+        String emailRegex = "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$";
+        String phoneRegex = "^0\\d{9}$";
+
+        if (email != null && !email.matches(emailRegex)) {
+            error += "Email không hợp lệ!<br>";
+        }
+
+        if (phone != null && !phone.matches(phoneRegex)) {
+            error += "Số điện thoại không hợp lệ!<br>";
+        }
+
+        // 3️⃣ password
+        if (pass != null && pass.length() < 6) {
+            error += "Mật khẩu phải >= 6 ký tự!<br>";
+        }
+
+        // 4️⃣ confirm
+        if (pass != null && confirm != null && !pass.equals(confirm)) {
+            error += "Mật khẩu không khớp!<br>";
+        }
+
+        // ❗ nếu có lỗi → trả về JSP
+        if (!error.isEmpty()) {
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("views/register.jsp").forward(request, response);
             return;
         }
 
-        // 2️⃣ kiểm tra confirm password
-        if (!pass.equals(confirm)) {
-            request.setAttribute("error", "Password does not match!");
-            request.getRequestDispatcher("views/register.jsp")
-                   .forward(request, response);
-            return;
-        }
-
-        // 3️⃣ kiểm tra email tồn tại
+        // 5️⃣ check email tồn tại
         if (userDAO.findByEmail(email) != null) {
             request.setAttribute("error", "Email already exists!");
-            request.getRequestDispatcher("views/register.jsp")
-                   .forward(request, response);
+
+            request.setAttribute("fullName", fullName);
+            request.setAttribute("email", email);
+            request.setAttribute("phone", phone);
+            request.getRequestDispatcher("views/register.jsp").forward(request, response);
             return;
         }
 
-        // 4️⃣ tạo user mới
+        // 6️⃣ tạo user
         User user = new User();
         user.setFullName(fullName);
         user.setEmail(email);
         user.setPhone(phone);
         user.setPassword(pass);
-        user.setRole(UserRole.USER); // mặc định
+        user.setRole(UserRole.USER);
 
         userDAO.register(user);
 
-        // 5️⃣ chuyển sang login
+        // 7️⃣ chuyển trang
         response.sendRedirect(request.getContextPath() + "/login");
     }
-    
-
 }

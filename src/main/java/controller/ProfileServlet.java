@@ -41,21 +41,34 @@ public class ProfileServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
 
-        if (fullName == null || phone == null || password == null || fullName.trim().isEmpty() || password.trim().isEmpty()) {
-            request.setAttribute("error", "Tên và mật khẩu không được để trống!");
+        if (fullName == null || fullName.trim().isEmpty()) {
+            request.setAttribute("error", "Họ và tên không được để trống!");
             request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
             return;
         }
 
-        user.setFullName(fullName);
-        user.setPhone(phone);
-        user.setPassword(password);
+        if (phone == null || !phone.matches("^\\d{10,11}$")) {
+            request.setAttribute("error", "Số điện thoại phải gồm 10 hoặc 11 chữ số!");
+            request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
+            return;
+        }
+
+        if (password == null || password.trim().length() < 6) {
+            request.setAttribute("error", "Mật khẩu phải có ít nhất 6 ký tự!");
+            request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
+            return;
+        }
+
+        user.setFullName(fullName.trim());
+        user.setPhone(phone.trim());
+        user.setPassword(password.trim());
 
         userDAO.update(user);
 
         session.setAttribute("user", user);
 
-        response.sendRedirect("profile");
+        request.setAttribute("message", "Cập nhật thông tin thành công!");
+        request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
     }
 
 }

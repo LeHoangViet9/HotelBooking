@@ -28,6 +28,7 @@ controller\LoginServlet.class
 controller\RoomServlet.class
 controller\AdminHotelServlet.class
 controller\SearchServlet.class
+test\TestDAO.class
 dal\CityDAO.class
 dal\ReviewDAO.class
 model\Booking.class

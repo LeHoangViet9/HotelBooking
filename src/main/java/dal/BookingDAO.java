@@ -37,14 +37,9 @@ public class BookingDAO {
             BookingStatus current = booking.getStatus();
 
             if (newStatus == BookingStatus.CONFIRMED && current == BookingStatus.PENDING) {
-                if (room.getQuantity() <= 0) {
-                    em.getTransaction().rollback();
-                    return;
-                }
-                room.setQuantity(room.getQuantity() - 1);
                 booking.setStatus(BookingStatus.CONFIRMED);
 
-            } else if (newStatus == BookingStatus.CANCELLED && current == BookingStatus.CONFIRMED) {
+            } else if (newStatus == BookingStatus.CANCELLED && (current == BookingStatus.CONFIRMED || current == BookingStatus.PENDING)) {
                 room.setQuantity(room.getQuantity() + 1);
                 booking.setStatus(BookingStatus.CANCELLED);
 
@@ -76,6 +71,19 @@ public class BookingDAO {
     public void save(Booking booking) {
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
+        
+        Room room = booking.getRoom();
+        if (room != null) {
+            Room mergedRoom = em.find(Room.class, room.getId());
+            mergedRoom.setQuantity(mergedRoom.getQuantity() - 1);
+            if (mergedRoom.getQuantity() <= 0) {
+                mergedRoom.setStatus(model.RoomStatus.FULL);
+            } else {
+                mergedRoom.setStatus(model.RoomStatus.AVAILABLE);
+            }
+            booking.setRoom(mergedRoom);
+        }
+        
         em.persist(booking);
         em.getTransaction().commit();
         em.close();
@@ -107,10 +115,12 @@ public class BookingDAO {
                     || booking.getStatus() == BookingStatus.PENDING)) {
 
                 Room room = booking.getRoom();
-                if (booking.getStatus() == BookingStatus.CONFIRMED) {
-                    room.setQuantity(room.getQuantity() + 1);
-                    em.merge(room);
+                room.setQuantity(room.getQuantity() + 1);
+                if (room.getQuantity() > 0) {
+                    room.setStatus(model.RoomStatus.AVAILABLE);
                 }
+                em.merge(room);
+                
                 booking.setStatus(BookingStatus.CANCELLED);
                 em.merge(booking);
             }

@@ -182,10 +182,16 @@
                                 <div class="star-rating-input">
                                     <span>Đánh giá của bạn:</span>
                                     <div class="star-group">
-                                        <c:forEach begin="5" end="1" step="-1" var="s">
-                                            <input type="radio" name="rating" id="star${s}" value="${s}" ${s == 5 ? 'checked' : ''}>
-                                            <label for="star${s}"><i class="fa-solid fa-star"></i></label>
-                                        </c:forEach>
+                                        <input type="radio" name="rating" id="star5" value="5" checked>
+                                        <label for="star5"><i class="fa-solid fa-star"></i></label>
+                                        <input type="radio" name="rating" id="star4" value="4">
+                                        <label for="star4"><i class="fa-solid fa-star"></i></label>
+                                        <input type="radio" name="rating" id="star3" value="3">
+                                        <label for="star3"><i class="fa-solid fa-star"></i></label>
+                                        <input type="radio" name="rating" id="star2" value="2">
+                                        <label for="star2"><i class="fa-solid fa-star"></i></label>
+                                        <input type="radio" name="rating" id="star1" value="1">
+                                        <label for="star1"><i class="fa-solid fa-star"></i></label>
                                     </div>
                                 </div>
                                 <textarea name="comment" placeholder="Chia sẻ cảm nhận của bạn về khách sạn này..." rows="4"></textarea>
