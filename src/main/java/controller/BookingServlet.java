@@ -89,6 +89,11 @@ public class BookingServlet extends HttpServlet {
             return;
         }
 
+        String paymentMethod = request.getParameter("paymentMethod");
+        if (paymentMethod == null || paymentMethod.isEmpty()) {
+            paymentMethod = "OFFLINE";
+        }
+
         double totalPrice = days * room.getPrice();
 
         Booking booking = new Booking();
@@ -98,9 +103,17 @@ public class BookingServlet extends HttpServlet {
         booking.setCheckOut(checkOut);
         booking.setTotalPrice(totalPrice);
         booking.setStatus(BookingStatus.PENDING);
+        booking.setPaymentMethod(paymentMethod);
+        booking.setPaymentStatus("UNPAID");
 
         bookingDAO.save(booking);
 
-        response.sendRedirect("mybooking");
+        if ("ONLINE".equals(paymentMethod)) {
+            request.setAttribute("bookingId", booking.getId());
+            request.setAttribute("totalAmount", totalPrice);
+            request.getRequestDispatcher("views/mock_payment.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("mybooking");
+        }
     }
 }

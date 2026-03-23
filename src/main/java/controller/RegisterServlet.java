@@ -81,7 +81,7 @@ public class RegisterServlet extends HttpServlet {
 
         // 5️⃣ check email tồn tại
         if (userDAO.findByEmail(email) != null) {
-            request.setAttribute("error", "Email already exists!");
+            request.setAttribute("error", "Email đã tồn tại!");
 
             request.setAttribute("fullName", fullName);
             request.setAttribute("email", email);
@@ -90,7 +90,18 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        // 6️⃣ tạo user
+        // 6️⃣ check phone tồn tại
+        if (userDAO.findByPhone(phone) != null) {
+            request.setAttribute("error", "Số điện thoại đã tồn tại!");
+
+            request.setAttribute("fullName", fullName);
+            request.setAttribute("email", email);
+            request.setAttribute("phone", phone);
+            request.getRequestDispatcher("views/register.jsp").forward(request, response);
+            return;
+        }
+
+        // 7️⃣ tạo user
         User user = new User();
         user.setFullName(fullName);
         user.setEmail(email);
@@ -100,7 +111,7 @@ public class RegisterServlet extends HttpServlet {
 
         userDAO.register(user);
 
-        // 7️⃣ chuyển trang
+        // 8️⃣ chuyển trang
         response.sendRedirect(request.getContextPath() + "/login");
     }
 }

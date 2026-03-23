@@ -46,6 +46,21 @@ public class UserDAO {
         }
     }
 
+    public User findByPhone(String phone) {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            java.util.List<User> list = em.createQuery(
+                    "SELECT u FROM User u WHERE u.phone = :p",
+                    User.class)
+                    .setParameter("p", phone)
+                    .setMaxResults(1)
+                    .getResultList();
+            return list.isEmpty() ? null : list.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public long countUsers() {
         EntityManager em = JPAUtil.getEntityManager();
         long count = em.createQuery("SELECT COUNT(u) FROM User u", Long.class)

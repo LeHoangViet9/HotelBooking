@@ -59,6 +59,13 @@ public class ProfileServlet extends HttpServlet {
             return;
         }
 
+        User existingUser = userDAO.findByPhone(phone.trim());
+        if (existingUser != null && existingUser.getId() != user.getId()) {
+            request.setAttribute("error", "Số điện thoại đã được đăng ký bởi tài khoản khác!");
+            request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
+            return;
+        }
+
         user.setFullName(fullName.trim());
         user.setPhone(phone.trim());
         user.setPassword(password.trim());

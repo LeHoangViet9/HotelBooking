@@ -33,6 +33,12 @@ public class Booking {
     @Column(length = 20)
     private BookingStatus status;
 
+    @Column(name = "payment_method", length = 50)
+    private String paymentMethod;
+
+    @Column(name = "payment_status", length = 50)
+    private String paymentStatus;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -98,6 +104,22 @@ public class Booking {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
 }

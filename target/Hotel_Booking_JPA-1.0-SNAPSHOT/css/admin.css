@@ -1,0 +1,170 @@
+/* =========================
+   ADMIN TITLE
+========================= */
+
+.admin-title{
+    width:85%;
+    margin:30px auto;
+    font-size:26px;
+    font-weight:bold;
+}
+
+
+/* =========================
+   BOOKING CARD
+========================= */
+
+.booking-card{
+    width:85%;
+    margin:15px auto;
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+    font-weight:bold;
+}
+
+.pending{color:orange;}
+.confirmed{color:green;}
+.cancelled{color:red;}
+.completed{color:#2563eb;}
+
+
+/* =========================
+   BOOKING BUTTON
+========================= */
+
+.booking-actions button{
+    border:none;
+    padding:8px 16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-confirm{
+    background:#22c55e;
+    color:white;
+}
+
+.btn-cancel{
+    background:#ef4444;
+    color:white;
+}
+
+
+/* =========================
+   HOTEL ADMIN TABLE
+========================= */
+
+.admin-container{
+    width:85%;
+    margin:20px auto;
+}
+
+.admin-table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+.admin-table th{
+    background:#374151;
+    color:white;
+    padding:12px;
+}
+
+.admin-table td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+
+.admin-table tr:nth-child(even){
+    background:#f9fafb;
+}
+
+
+/* =========================
+   HOTEL ACTION BUTTON
+========================= */
+
+.action-btn{
+    padding:6px 12px;
+    border-radius:5px;
+    text-decoration:none;
+    color:white;
+    font-size:14px;
+}
+
+.edit-btn{
+    background:#3b82f6;
+}
+
+.delete-btn{
+    background:#ef4444;
+}
+
+
+/* =========================
+   HOTEL FORM
+========================= */
+
+.form-box{
+    width:420px;
+    background:white;
+    margin:30px auto;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#2563eb;
+    outline:none;
+}
+
+
+/* =========================
+   SUBMIT BUTTON
+========================= */
+
+.btn-primary{
+    width:100%;
+    padding:10px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
